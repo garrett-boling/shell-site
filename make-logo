@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+#
+# Print the YSAP logo
+#
+# # Created
+# Author: Dave Eddy <ysap@daveeddy.com>
+# Date: April 05, 2025
+# License: MIT
+#
+# # Contributors
+# - Dave Eddy <ysap@daveeddy.com>
+# - Joshua Rayton <joshua.rayton@gmail.com>
+#
+# Modified by: Garrett Boling
+# Date: February 05, 2026
+# License: MIT
+
+. ./theme || exit
+
+TEXT="${1:-gboling.dev}"
+FONT="${FONT:-slant}"   # try: slant, standard, big, small
+
+mapfile -t LINES < <(figlet -f "$FONT" -- "$TEXT")
+
+total=${#LINES[@]}
+gradlen=${#GRADIENT[@]}
+
+for ((y=0; y<total; y++)); do
+    line="${LINES[y]}"
+
+    # map line index → gradient index
+    idx=$(( y * gradlen / total ))
+    color="${GRADIENT[idx]}"
+
+    out=""
+    for ((i=0; i<${#line}; i++)); do
+        ch="${line:i:1}"
+        if [[ "$ch" == " " ]]; then
+            out+=" "
+        else
+            out+="${color}${ch}${RST}"
+        fi
+    done
+
+    echo -e "$out"
+done
