@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+#
+# Print the colorized YSAP logo and metadata used as the header for all pages
+# you can request via `curl`
+#
+# Author: Dave Eddy <dave@daveeddy.com>
+# Date: March 17, 2024
+# License: MIT
+#
+# Modified by: Garrett Boling
+# Date: Februuary 05, 2026
+# License: MIT
+
+. ./theme || exit
+. ./tools/repeat-char || exit
+
+padding=1
+while getopts 'p:' opt; do
+	case "$opt" in
+		p) padding=$OPTARG;;
+		*) exit 1;;
+	esac
+done
+
+padding=$(repeat-char ' ' "$padding")
+
+mapfile -t logo < <(./make-logo)
+
+description=(
+	""
+	"${COLOR5}Garrett Boling$RST"
+	"${COLOR5}Personal Portfolio Page$RST"
+	"${COLOR1}https://gboling.dev$RST"
+	''
+	"${COLOR5}Source: ${COLOR1}https://github.com/garrett-boling/shell-site$RST"
+)
+
+len=${#logo[@]}
+
+for ((i = 0; i < len; i++)); do
+	logo_line=${logo[i]}
+	desc_line=${description[i]}
+
+	echo "$logo_line$padding$desc_line"
+done

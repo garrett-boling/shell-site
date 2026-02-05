@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+#
+# Generate the Legend (help message) - intended to be passed to `tools/box`
+#
+# Author: Dave Eddy <dave@daveeddy.com>
+# Date: April 05, 2025
+# License: MIT
+#
+# Modified by: Garrett Boling
+# Date: February 05, 2026
+# License: MIT
+
+. ./theme || exit
+
+UNDERLINE=$'\x1b[3m'
+
+format-box() {
+	local title=$1
+	shift
+
+	if [[ -z $1 ]]; then
+		return
+	fi
+	local cmd_re='^(\$ [^ ]+)(.*)$'
+	{
+		echo '%'
+		local line name url
+		for line in "$@"; do
+			IFS='%' read -r name url <<< "$line"
+
+			if [[ $name =~ $cmd_re ]]; then
+				local cmd=${BASH_REMATCH[1]}
+				local rest=${BASH_REMATCH[2]}
+
+				echo -n "$COLOR3$cmd$RST$COLOR5$rest"
+			else
+				echo -n "$COLOR5$name$RST"
+			fi
+
+			echo -n '%'
+			echo -n "$COLOR1$UNDERLINE$url$RST"
+			echo
+		done
+	} | ./tools/box -s '%' -hp 1 -tc "$COLOR5" -T plain -t "$title"
+}
+
+full='false'
+while getopts 'f' opt; do
+	case "$opt" in
+		f) full='true';;
+		*) exit 1;;
+	esac
+done
+
+legend=(
+	'$ curl sh.gboling.dev%Get this page'
+	'$ curl sh.gboling.dev/projects%Get a list of projects that I have worked on'
+	'$ curl sh.gboling.dev/json%Get the above in JSON format'
+	'$ curl sh.gboling.dev/help%Get the full list of available endpoints'
+)
+
+format-box Legend "${legend[@]}"
