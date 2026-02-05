@@ -14,8 +14,9 @@
 . ./theme || exit 1
 
 readarray -t ABOUT << "EOF"
-Hello! My name is Garrett Boling, and I'm a fullstack developer
-and data scientist. Connect with my socials or use this site
+Hello! My name is Garrett Boling.
+I'm a fullstack developer and data scientist.
+Connect with me on my socials or use this site
 to easily browse my portfolio!
 EOF
 

@@ -9,12 +9,12 @@
 . ./theme || exit
 
 readarray -t SOCIALS << "EOF"
-GitHub|https://github.com/garrett-boling
-LinkedIn|https://www.linkedin.com/in/garrett-boling-04174b196/
-Instagram|https://www.instagram.com/garrett.boling1212
-WhatsApp|https://wa.me/18642079092
-Telegram|https://t.me/gboling02
-Messenger|https://m.me/garrett.boling1212
+GitHub|https://gboling.dev/github.html
+LinkedIn|https://gboling.dev/linkedin.html
+Instagram|https://gboling.dev/instagram.html
+WhatsApp|https://gboling.dev/whatsapp.html
+Telegram|https://gboling.dev/telegram.html
+Messenger|https://gboling.dev/messenger.html
 EOF
 
 UNDERLINE=$'\x1b[3m'
