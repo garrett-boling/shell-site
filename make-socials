@@ -9,11 +9,12 @@
 . ./theme || exit
 
 readarray -t SOCIALS << "EOF"
-Instagram|https://ysap.sh/instagram
-YouTube|https://ysap.sh/youtube
-Patreon|https://ysap.sh/patreon
-Discord|https://ysap.sh/discord
-Twitch|https://ysap.sh/twitch
+GitHub|https://github.com/garrett-boling
+LinkedIn|https://www.linkedin.com/in/garrett-boling-04174b196/
+Instagram|https://www.instagram.com/garrett.boling1212
+WhatsApp|https://wa.me/18642079092
+Telegram|https://t.me/gboling02
+Messenger|https://m.me/garrett.boling1212
 EOF
 
 UNDERLINE=$'\x1b[3m'
