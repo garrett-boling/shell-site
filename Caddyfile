@@ -1,18 +1,12 @@
 sh.gboling.dev {
-  # Allow ACME HTTP-01 validation
-  @acme path /.well-known/acme-challenge/*
-  handle @acme {
-    file_server
-  }
+  root * /srv
 
-  # Curl-only content
   @curl header_regexp User-Agent curl
   handle @curl {
     rewrite /projects /projects/index.txt
     file_server
   }
 
-  # Block everything else
   handle {
     respond 403
   }
