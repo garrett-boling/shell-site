@@ -12,23 +12,11 @@ help:
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
 
 .PHONY: build
-build: static/favicon.ico static/ysap.png static/favicon.jpg ## default target, builds the site into ./_site
+build: # default target, builds the site into ./_site
 	mkdir -p _site _site/contact _site/static _site/projects _site/resources
 	# disable indexing for certain dirs
 	echo -n > _site/static/index.html
-	# copy static files
 
-# 	cat static/favicon.ico > _site/favicon.ico
-# 	cat static/favicon.jpg > _site/static/favicon.jpg
-# 	cat static/robots.txt > _site/robots.txt
-# 	cat static/ysap.png > _site/static/ysap.png
-# 	cat static/style.css > _site/static/style.css
-# 	cat static/ansi.css > _site/static/ansi.css
-# 	cat static/terminal.js > _site/static/terminal.js
-# 	cat static/index.html > _site/index.html
-# 	cat static/contact.html > _site/contact/index.html
-# 	cat static/projects.html > _site/projects/index.html
-# 	cat static/resources.html > _site/resources/index.html
 	# make /ping endpoint (caddy handles this for me, but just in case)
 	echo 'pong' > _site/ping
 	# create ASCII index page for curl users
@@ -39,15 +27,6 @@ build: static/favicon.ico static/ysap.png static/favicon.jpg ## default target, 
 	./make-projects > _site/projects/index.txt
 	# make projects JSON file for curl
 	./make-projects-json > _site/json
-
-static/favicon.ico:
-	curl -o $@ https://files.daveeddy.com/ysap/favicon.ico
-
-static/favicon.jpg:
-	curl -o $@ https://files.daveeddy.com/ysap/favicon.jpg
-
-static/ysap.png:
-	curl -o $@ https://files.daveeddy.com/ysap/ysap.png
 
 .PHONY: all
 all: build deploy ## build and deploy the site
@@ -70,6 +49,6 @@ clean: ## remove any generated files
 	rm -f static/favicon.{ico,jpg}
 	rm -f static/ysap.png
 
-.PHONY: deploy
-deploy: ## deploy the site (using rsync)
-	rsync -avh --delete ./_site/ web:/var/www/ysap.sh/
+# .PHONY: deploy
+# deploy: ## deploy the site (using rsync)
+# 	rsync -avh --delete ./_site/ web:/var/www/ysap.sh/

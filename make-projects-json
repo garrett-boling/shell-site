@@ -6,24 +6,13 @@
 # Author: Dave Eddy <dave@daveeddy.com>
 # Date: March 17, 2024
 # License: MIT
+#
+# Modified by: Garrett Boling
+# Date: February 06, 2026
+# License: MIT
 
 varname=$1
 
-
-# this is an "episode" object in the final json
-read -d '' -r json <<-"EOF"
-{
-	"title": $title,
-	"desc": $desc,
-	"link": $link,
-	"num": $num,
-	"external": {
-		"tiktok": $tiktok,
-		"youtube": $youtube,
-		"instagram": $instagram
-	}
-}
-EOF
 
 # read data
 objects=()
@@ -33,7 +22,12 @@ while IFS=$'\t' read -r num title desc link; do
 		--arg desc "$desc" \
 		--arg link "$link" \
 		--argjson num "$num" \
-		"$json"
+		'{
+			"title": $title,
+			"desc": $desc,
+			"link": $link,
+			"num": $num
+		}'
 	) || exit
 	objects+=("$object")
 done < <(./make-list)
