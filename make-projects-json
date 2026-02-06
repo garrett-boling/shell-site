@@ -9,7 +9,6 @@
 
 varname=$1
 
-baselink='https://ysap.sh'
 
 # this is an "episode" object in the final json
 read -d '' -r json <<-"EOF"
@@ -28,15 +27,12 @@ EOF
 
 # read data
 objects=()
-while IFS=$'\t' read -r num title desc link tt yt ig; do
+while IFS=$'\t' read -r num title desc link; do
 	object=$(jq -nc \
 		--arg title "$title" \
 		--arg desc "$desc" \
-		--arg link "$baselink$link" \
+		--arg link "$link" \
 		--argjson num "$num" \
-		--arg tiktok "$tt" \
-		--arg youtube "$yt" \
-		--arg instagram "$ig" \
 		"$json"
 	) || exit
 	objects+=("$object")
@@ -48,10 +44,10 @@ output=$(printf '%s\n' "${objects[@]}" | jq -n \
     --argjson date "$now" \
     --arg link "$baselink" \
     '{
-        "name": "You Suck at Programming",
+        "name": "Garrett Boling Projects",
         "site": $link,
         "generated": $date,
-        "episodes": [inputs]
+        "links": [inputs]
      }'
 )
 

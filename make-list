@@ -6,8 +6,12 @@
 # Author: Dave Eddy <dave@daveeddy.com>
 # Date: April 05, 2025
 # License: MIT
+#
+# Modified by: Garrett Boling
+# Date: February 06, 2026
+# License: MIT
 
-dir=${1:-../episodes}
+dir=${1:-./projects}
 
 for pt in "$dir"/pt*/meta.txt; do
 	mapfile -t lines < "$pt"

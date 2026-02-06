@@ -6,11 +6,15 @@
 # Date: March 17, 2024
 # License: MIT
 
+# Modified by: Garrett Boling
+# Date: February 06, 2026
+# License: MIT
+
 . ./theme || exit
 
 format() {
-	local num title desc link _tt _yt _ig
-	while IFS=$'\t' read -r num title desc link _tt _yt _ig; do
+	local num title desc link
+	while IFS=$'\t' read -r num title desc link; do
 		title=$(format-title "$num" "$title")
 		desc=$(format-description "$desc")
 		link=$(format-link "$link")
@@ -39,7 +43,7 @@ format-description() {
 format-link() {
 	local link=$1
 
-	echo "${COLOR1}https://ysap.sh$link$RST"
+	echo "${COLOR1}$link$RST"
 }
 
 format-ticks() {
@@ -73,4 +77,4 @@ echo
 # create the table
 ./make-list | \
     format | \
-    ./tools/box -s $'\t' -hp 1 -tc "$COLOR5" -bc "$COLOR4" -t Episodes -vp 1
+    ./tools/box -s $'\t' -hp 1 -tc "$COLOR5" -bc "$COLOR4" -t Projects -vp 1
