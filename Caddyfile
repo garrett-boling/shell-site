@@ -1,4 +1,4 @@
-sh.gboling.dev {
+shell.gboling.dev {
   root * /srv
 
   @curl header_regexp User-Agent curl
