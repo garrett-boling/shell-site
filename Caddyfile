@@ -1,0 +1,18 @@
+sh.gboling.dev {
+    root * /srv
+
+    # Only allow curl user agents
+    @curl {
+        header_regexp User-Agent curl
+    }
+
+    # Block non-curl requests
+    respond @curl 200
+    respond 403
+
+    # Internal rewrite: /projects -> /projects/index.txt
+    rewrite /projects /projects/index.txt
+
+    # Serve static files (index.txt, help, json, etc.)
+    file_server
+}
